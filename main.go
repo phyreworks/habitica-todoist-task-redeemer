@@ -63,7 +63,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 	var event TodoistEvent
 	err := json.Unmarshal([]byte(request.Body), &event)
 	if err != nil {
-		return events.APIGatewayProxyResponse{}, errors.New("json unmarshal error")
+		return events.APIGatewayProxyResponse{}, errors.Wrapf(err, "error unmarshalling json: %s", []byte(request.Body))
 	}
 
 	switch event.EventName {
