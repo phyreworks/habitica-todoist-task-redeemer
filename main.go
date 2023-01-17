@@ -20,7 +20,7 @@ import (
 type (
 	TodoistEvent struct {
 		EventName EventName `json:"event_name"`
-		UserID    int       `json:"user_id"`
+		UserID    string    `json:"user_id"`
 		EventData EventData `json:"event_data"`
 	}
 
@@ -82,7 +82,7 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 
 	return events.APIGatewayProxyResponse{
 		StatusCode: 200,
-		Body:       "Hello AWS Lambda and Netlify",
+		Body:       "Succeeded to integrate task",
 	}, nil
 }
 
