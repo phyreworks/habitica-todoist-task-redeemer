@@ -66,6 +66,8 @@ func handler(request events.APIGatewayProxyRequest) (events.APIGatewayProxyRespo
 		return events.APIGatewayProxyResponse{}, errors.Wrapf(err, "error unmarshalling json: %s", []byte(request.Body))
 	}
 
+	log.Printf("Received event %s", event.EventName)
+	
 	switch event.EventName {
 	case ItemCompleted:
 		err := handleItemCompleted(event)
@@ -96,6 +98,8 @@ func handleItemCompleted(event TodoistEvent) error {
 		"type":  "todo",
 		"notes": fmt.Sprintf("Todoist: %s", event.EventData.ID),
 	}
+
+	log.Printf("Processing ID %s - text %s", event.EventData.ID, event.EventData.Content)
 
 	taskJson, err := json.Marshal(task)
 	if err != nil {
@@ -170,6 +174,8 @@ func handleItemCompleted(event TodoistEvent) error {
 	if res.StatusCode != http.StatusOK {
 		return errors.New(fmt.Sprintf("Status is not 200 OK. Body: %s Request: %s", resBody, taskJson))
 	}
+
+	log.Printf("Status %d. Body: %s Request: %s", res.StatusCode, resBody, taskJson)
 
 	return nil
 }
