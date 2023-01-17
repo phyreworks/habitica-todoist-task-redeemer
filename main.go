@@ -96,7 +96,7 @@ func handleItemCompleted(event TodoistEvent) error {
 	task := map[string]interface{}{
 		"text":  event.EventData.Content,
 		"type":  "todo",
-		"notes": fmt.Sprintf("Todoist: %s", event.EventData.ID),
+		"notes": fmt.Sprintf("https://todoist.com/showTask?id=%s", event.EventData.ID),
 	}
 
 	log.Printf("Processing ID %s - text %s", event.EventData.ID, event.EventData.Content)
